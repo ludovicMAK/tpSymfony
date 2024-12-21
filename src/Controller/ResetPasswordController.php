@@ -108,7 +108,6 @@ class ResetPasswordController extends AbstractController
         // The token is valid; allow the user to change their password.
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // A password reset token should be used only once, remove it.
             $this->resetPasswordHelper->removeResetRequest($token);

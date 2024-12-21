@@ -20,8 +20,13 @@ class Testimony
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'testimonies')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'testimonies')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $idUser = null;
+    
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'testimonies')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Project $project = null;
 
     public function getId(): ?int
     {
@@ -59,7 +64,7 @@ class Testimony
         return $this;
     }
 
-    public function getIdUser():?User
+    public function getIdUser(): ?User
     {
         return $this->idUser;
     }
@@ -67,6 +72,18 @@ class Testimony
     public function setIdUser(?User $idUser): static
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): static
+    {
+        $this->project = $project;
 
         return $this;
     }

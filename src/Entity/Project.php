@@ -31,12 +31,20 @@ class Project
     #[ORM\OneToMany(targetEntity: Delivery::class, mappedBy: 'idProject')]
     private Collection $deliveries;
 
-    #[ORM\ManyToOne(inversedBy: 'projects')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'projects')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $idUser = null;
+
+    /**
+     * @var Collection<int, Testimony>
+     */
+    #[ORM\OneToMany(targetEntity: Testimony::class, mappedBy: 'project')]
+    private Collection $testimony;
 
     public function __construct()
     {
         $this->deliveries = new ArrayCollection();
+        $this->testimony = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,6 +133,36 @@ class Project
     public function setIdUser(?User $idUser): static
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Testimony>
+     */
+    public function getTestimony(): Collection
+    {
+        return $this->testimony;
+    }
+
+    public function addTestimony(Testimony $testimony): static
+    {
+        if (!$this->testimony->contains($testimony)) {
+            $this->testimony->add($testimony);
+            $testimony->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestimony(Testimony $testimony): static
+    {
+        if ($this->testimony->removeElement($testimony)) {
+            // set the owning side to null (unless already changed)
+            if ($testimony->getProject() === $this) {
+                $testimony->setProject(null);
+            }
+        }
 
         return $this;
     }

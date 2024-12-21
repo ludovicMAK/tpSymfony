@@ -23,7 +23,8 @@ class Delivery
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateDelivery = null;
 
-    #[ORM\ManyToOne(inversedBy: 'deliveries')]
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'deliveries')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Project $idProject = null;
 
     public function getId(): ?int

@@ -9,7 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Email</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +19,8 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>

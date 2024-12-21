@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    {% include 'parts/navbar.html.twig' %}
+    {% if app.user %}
+    <p>Bienvenue, {{ app.user.firstname }}  {{ app.user.lastname }}!</p>
+    <a href="{{ path('app_logout') }}" class="btn btn-danger">Se déconnecter</a>
+    {% else %}
+        <p>Bienvenue, invité !</p>
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+    {% endif %}
+{% endblock %}

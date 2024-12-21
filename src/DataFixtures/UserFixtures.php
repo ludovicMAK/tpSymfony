@@ -23,7 +23,8 @@ class UserFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++) {
             $user = new User();
             $user->setEmail("user$i@example.com");
-            $user->setName("User$i");
+            $user->setFirstname("FirstnameUser$i");
+            $user->setLastname("LastnameUser$i");
             $user->setPassword(
                 $this->passwordHasher->hashPassword($user, 'password')
             );
@@ -35,7 +36,8 @@ class UserFixtures extends Fixture
         }
         $user = new User();
         $user->setEmail("ludovic93mak@gmail.com");
-        $user->setName("Ludovic");
+        $user->setFirstname("Ludovic");
+        $user->setLastname("Ludovic");
         $user->setPassword(
             $this->passwordHasher->hashPassword($user, 'password')
         );

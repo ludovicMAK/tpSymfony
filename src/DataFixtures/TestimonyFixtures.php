@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Project;
 use App\Entity\Testimony;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,6 +19,8 @@ class TestimonyFixtures extends Fixture implements DependentFixtureInterface
             $testimony->setDate(new \DateTime());
             $userReference = $this->getReference("user_" . $i, User::class);
             $testimony->setIdUser($userReference);
+            $projectReference = $this->getReference("project_$i", Project::class);
+            $testimony->setProject($projectReference);
 
             $manager->persist($testimony);
 
@@ -32,6 +35,7 @@ class TestimonyFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class, // Charger les utilisateurs avant les témoignages
+            ProjectFixtures::class, // Charger les projets avant les témoignages
         ];
     }
 }

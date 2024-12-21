@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Testimony;
-use App\Form\TestimonyType;
+use App\Form\Testimony1Type;
 use App\Repository\TestimonyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ final class TestimonyController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $testimony = new Testimony();
-        $form = $this->createForm(TestimonyType::class, $testimony);
+        $form = $this->createForm(Testimony1Type::class, $testimony);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ final class TestimonyController extends AbstractController
     #[Route('/{id}/edit', name: 'app_testimony_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Testimony $testimony, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(TestimonyType::class, $testimony);
+        $form = $this->createForm(Testimony1Type::class, $testimony);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
