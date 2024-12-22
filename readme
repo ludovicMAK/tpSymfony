@@ -1,0 +1,69 @@
+# Initialisation du Projet
+
+Ce guide vous aide à configurer et lancer le projet étape par étape.
+
+---
+
+## Pré-requis
+
+- PHP installé sur votre machine
+- Composer
+- Node.js (ou Yarn pour les dépendances frontend)
+- Symfony CLI
+- Une base de données compatible configurée (MySQL, PostgreSQL, etc.)
+
+---
+
+## Étapes d'initialisation
+
+### 1. Configuration de l'environnement
+
+1. Copiez le fichier `.env.dev` en `.env` :
+   ```bash
+   cp .env.dev .env
+   ```
+2. Modifiez les variables d'environnement dans le fichier `.env` si nécessaire.
+
+### 2. Installation des dépendances
+
+1. Installez les dépendances PHP :
+   ```bash
+   composer install
+   ```
+2. Installez les dépendances Node.js :
+   ```bash
+    npm install
+   ```
+   ou
+   ```bash
+   yarn install
+   ```
+
+### 3. Création de la base de données
+
+1. Créez la base de données :
+   ```bash
+   php bin/console doctrine:database:create
+   ```
+2. Mettez à jour le schéma de la base de données :
+   ```bash
+    php bin/console doctrine:migrations:migrate
+   ```
+3. (Optionnel) Chargez les données de test :
+   ```bash
+   php bin/console doctrine:fixtures:load
+   ```
+
+### 4. Lancer le serveur
+
+1. Lancez le serveur Symfony :
+   ```bash
+   symfony serve:start
+   ```
+
+### 5. Accéder au site
+
+j'ai créé un utilisateur par défaut pour tester l'application :
+
+- Email : `admin@gmail.com`
+- Mot de passe : `admin`

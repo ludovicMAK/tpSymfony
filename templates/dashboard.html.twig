@@ -10,4 +10,12 @@
         <p>Bienvenue, invité !</p>
         <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
     {% endif %}
+    <section >
+    <h1>Crud entité</h1>
+    <a href="{{ path('app_user_index') }}">User</a>
+    <a href="{{ path('app_project_index') }}">Project</a>
+    <a href="{{ path('app_task_index') }}">Task</a>
+    <a href="{{ path('app_delivery_index') }}">Delivery</a>
+    <a href="{{ path('app_testimony_index') }}">Testimony</a>
+    </section>
 {% endblock %}

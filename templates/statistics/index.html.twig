@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block body %}
+    <h1>Project Statistics</h1>
+
+    <div>
+        <canvas id="projectChart"></canvas>
+    </div>
+
+    <div>
+        <canvas id="statusChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Données pour les projets par client
+        const projectData = {
+            labels: {{ projectStats|map(stat => stat.client)|json_encode|raw }},
+            datasets: [{
+                label: 'Number of Projects',
+                data: {{ projectStats|map(stat => stat.projectCount)|json_encode|raw }},
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Données pour les statuts des projets
+        const statusData = {
+            labels: {{ statusStats|map(stat => stat.status)|json_encode|raw }},
+            datasets: [{ 
+                label: 'Number of Projects by Status',
+                data: {{ statusStats|map(stat => stat.count)|json_encode|raw }},
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Graphique pour les projets par client
+        new Chart(document.getElementById('projectChart'), {
+            type: 'bar',
+            data: projectData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Number of Projects by Client'
+                    }
+                }
+            }
+        });
+
+        // Graphique pour les statuts des projets
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: statusData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Project Status Distribution'
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

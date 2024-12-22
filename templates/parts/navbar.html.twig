@@ -4,6 +4,6 @@
     {% elseif is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_dashboard') }}" class="btn btn-warning">Accéder à l'administration</a>
     {% elseif is_granted('ROLE_USER') %}
-        <a href="{{ path('app_user_show',{id:app.user.id}) }}" class="btn btn-primary">Mon profil</a>
+        <a href="{{ path('user_profil',{id:app.user.id}) }}" class="btn btn-primary">Mon profil</a>
     {% endif %}
 </div>

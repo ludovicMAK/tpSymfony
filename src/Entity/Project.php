@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\EnumProject;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,10 +42,24 @@ class Project
     #[ORM\OneToMany(targetEntity: Testimony::class, mappedBy: 'project')]
     private Collection $testimony;
 
+    #[ORM\Column(enumType: EnumProject::class)]
+    private ?EnumProject $status = null;
+
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private Collection $tasks;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->deliveries = new ArrayCollection();
         $this->testimony = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +178,60 @@ class Project
                 $testimony->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?EnumProject
+    {
+        return $this->status;
+    }
+
+    public function setStatus(EnumProject $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

@@ -15,7 +15,24 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+    public function getProjectStatistics(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('c.lastname as client', 'COUNT(p.id) as projectCount')
+            ->join('p.idUser', 'c')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    }
 
+    public function getProjectStatusStatistics(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.status', 'COUNT(p.id) as count')
+            ->groupBy('p.status')
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return Projet[] Returns an array of Projet objects

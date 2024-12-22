@@ -24,3 +24,6 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+# Ignore les dépendances de Node.js
+node_modules/

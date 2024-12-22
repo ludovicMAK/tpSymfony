@@ -35,11 +35,11 @@ class UserFixtures extends Fixture
             $this->addReference("user_$i", $user);
         }
         $user = new User();
-        $user->setEmail("ludovic93mak@gmail.com");
-        $user->setFirstname("Ludovic");
-        $user->setLastname("Ludovic");
+        $user->setEmail("admin@gmail.com");
+        $user->setFirstname("admin");
+        $user->setLastname("admin");
         $user->setPassword(
-            $this->passwordHasher->hashPassword($user, 'password')
+            $this->passwordHasher->hashPassword($user, 'admin')
         );
         $user->setRoles([$roles[array_rand($roles)]]);
         $manager->persist($user);
