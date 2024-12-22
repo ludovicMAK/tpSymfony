@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/testimony')]
 final class TestimonyController extends AbstractController
 {
     #[Route(name: 'app_testimony_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(TestimonyRepository $testimonyRepository): Response
     {
         return $this->render('testimony/index.html.twig', [
@@ -23,6 +25,7 @@ final class TestimonyController extends AbstractController
     }
 
     #[Route('/new', name: 'app_testimony_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $testimony = new Testimony();
@@ -43,6 +46,7 @@ final class TestimonyController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_testimony_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Testimony $testimony): Response
     {
         return $this->render('testimony/show.html.twig', [
@@ -51,6 +55,7 @@ final class TestimonyController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_testimony_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Testimony $testimony, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(Testimony1Type::class, $testimony);
